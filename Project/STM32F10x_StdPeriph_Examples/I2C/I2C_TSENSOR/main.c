@@ -132,8 +132,8 @@ int main(void)
     LM75_WriteConfReg(0x02);
     
     /* Configure the THYS and TOS in order to use the SMbus alert interrupt */
-    LM75_WriteReg(LM75_REG_THYS, TEMPERATURE_THYS << 8);  /*31ÝC*/
-    LM75_WriteReg(LM75_REG_TOS, TEMPERATURE_TOS << 8);   /*32ÝC*/
+    LM75_WriteReg(LM75_REG_THYS, TEMPERATURE_THYS << 8);  /*31 C*/
+    LM75_WriteReg(LM75_REG_TOS, TEMPERATURE_TOS << 8);   /*32 C*/
     
     I2C_ClearITPendingBit(LM75_I2C, I2C_IT_SMBALERT);
     
@@ -174,7 +174,7 @@ int main(void)
         TempValueCelsius = 0x200 - TempValue;
       }
       
-      /* Calculate temperature digits in ÝC */
+      /* Calculate temperature digits in Â°C */
       if ((TempValueCelsius & 0x01) == 0x01)
       {
         TempCelsiusDisplay[12] = 0x05 + 0x30;
@@ -187,7 +187,7 @@ int main(void)
       }
       
       TempValueCelsius >>= 1;
-      
+
       TempCelsiusDisplay[8] = (TempValueCelsius / 100) + 0x30;
       TempCelsiusDisplay[9] = ((TempValueCelsius % 100) / 10) + 0x30;
       TempCelsiusDisplay[10] = ((TempValueCelsius % 100) % 10) + 0x30;
@@ -196,10 +196,10 @@ int main(void)
       {
         if (((9 * TempValueCelsius) / 5) <= 32)
         {
-          /* Convert temperature ÝC to Fahrenheit */
+          /* Convert temperature Â°C to Fahrenheit */
           TempValueFahrenheit = abs (32 - ((9 * TempValueCelsius) / 5));
           
-          /* Calculate temperature digits in ÝF */
+          /* Calculate temperature digits in Â°F */
           TempFahrenheitDisplay[8] = (TempValueFahrenheit / 100) + 0x30;
           TempFahrenheitDisplay[9] = ((TempValueFahrenheit % 100) / 10) + 0x30;
           TempFahrenheitDisplay[10] = ((TempValueFahrenheit % 100) % 10) + 0x30;
@@ -208,9 +208,9 @@ int main(void)
         }
         else
         {
-          /* Convert temperature ÝC to Fahrenheit */
+          /* Convert temperature Â°C to Fahrenheit */
           TempValueFahrenheit = abs(((9 * TempValueCelsius) / 5) - 32);
-          /* Calculate temperature digits in ÝF */
+          /* Calculate temperature digits in Â°F */
           TempFahrenheitDisplay[8] = (TempValueFahrenheit / 100) + 0x30;
           TempFahrenheitDisplay[9] = ((TempValueFahrenheit % 100) / 10) + 0x30;
           TempFahrenheitDisplay[10] = ((TempValueFahrenheit % 100) % 10) + 0x30;
@@ -221,10 +221,10 @@ int main(void)
       }
       else
       {
-        /* Convert temperature ÝC to Fahrenheit */
+        /* Convert temperature Â°C to Fahrenheit */
         TempValueFahrenheit = ((9 * TempValueCelsius) / 5) + 32;
         
-        /* Calculate temperature digits in ÝF */
+        /* Calculate temperature digits in Â°F */
         TempFahrenheitDisplay[8] = (TempValueFahrenheit / 100) + 0x30;
         TempFahrenheitDisplay[9] = ((TempValueFahrenheit % 100) / 10) + 0x30;
         TempFahrenheitDisplay[10] = ((TempValueFahrenheit % 100) % 10) + 0x30;
